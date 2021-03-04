@@ -1,0 +1,97 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+  font-size: 15px;
+}
+
+#browserTable {
+  width: 700px;
+  border-collapse: collapse;
+}
+
+#browserTable td {
+  font-size: 15px;
+}
+
+#browserTable td,
+#browserTable th {
+  border: 1px solid #ddd;
+  padding: 4px;
+}
+
+#browserTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#browserTable tr:hover {
+  background-color: rgb(194, 223, 216);
+}
+
+#browserTable th {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  text-align: center;
+  background-color: #2e9299;
+  color: white;
+}
+
+.actions {
+  text-align: center;
+}
+
+.deleteButton {
+  background-color: #99552e;
+  border: none;
+  color: white;
+  padding: 8px 18px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.buttons {
+  background-color: #2e9299;
+  border: none;
+  color: white;
+  padding: 8px 18px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.buttons > a {
+  text-decoration: none;
+  color: white;
+}
+
+.buttonsOther {
+  background-color: #0f6d74;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 8px 18px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.buttonsOther > a {
+  text-decoration: none;
+  color: white;
+}
+
+.textInput {
+  padding: 8px 14px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
