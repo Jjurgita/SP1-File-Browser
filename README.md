@@ -6,6 +6,7 @@ First PHP sprint tasks - simple file browser in a single file.<br>
 
 <hr>
 <img src="SP1fb-1.png">
+<hr>
 <img src="SP1fb-2.png">
 
 ## Requirements
@@ -20,7 +21,7 @@ First PHP sprint tasks - simple file browser in a single file.<br>
 2. Copy all the files to your website (XAMPP/AMPPS/other) folder and open it with web browser (e.g. http://localhost/file-browser/)
 3. Default username: Username and password: 1234
 
-### :file_folder: Features
+## :file_folder: Features
 
 #### Ability to:
 
