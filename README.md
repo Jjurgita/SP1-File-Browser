@@ -33,6 +33,6 @@ First PHP sprint tasks - simple file browser in a single file.<br>
 <li> Delete, Upload and Download files</li>
 </ul>
 
-## Author
+## Authors
 
-[Jurgita] (https://github.com/Jjurgita)
+[Jurgita](https://github.com/Jjurgita)
