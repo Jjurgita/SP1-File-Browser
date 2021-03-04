@@ -5,9 +5,9 @@ Sprint #1 - File Browser
 First PHP sprint tasks - simple file browser in a single file.<br>
 
 <hr>
-<img src="SP1fb-1.png">
+<img src="./images/SP1fb-1.png">
 <hr>
-<img src="SP1fb-2.png">
+<img src="./images/SP1fb-2.png">
 
 ## Requirements
 
