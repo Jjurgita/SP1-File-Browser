@@ -32,3 +32,7 @@ First PHP sprint tasks - simple file browser in a single file.<br>
 <li> Create new directories </li>
 <li> Delete, Upload and Download files</li>
 </ul>
+
+## Author
+
+[Jurgita] (https://github.com/Jjurgita)
