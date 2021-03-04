@@ -15,7 +15,7 @@ if (isset($_POST['newDir'])) {
     if (!is_dir($_POST['newDir'])) {
         mkdir($_GET['path'] . $_POST['newDir']);
     } else {
-        print('<p style="color: red;">' . $_POST['newDir'] . ' directory already exist.<br> Please add directory with another name one more time.</p>');
+        print('<p style="color: red;">ERROR: ' . $_POST['newDir'] . ' directory already exist.<br> Please add directory with another name one more time.</p>');
     }
 }
 
@@ -25,7 +25,7 @@ if (isset($_POST['delete'])) {
     header('Location: ' . $_SERVER['REQUEST_URI']);
 }
 
-/*  UPLOAD, DOWNLOAD file  */
+/*  UPLOAD file  */
 if (isset($_FILES['file'])) {
     $file_name = $_FILES['file']['name'];
     $file_size = $_FILES['file']['size'];
@@ -34,16 +34,24 @@ if (isset($_FILES['file'])) {
     $file_type = $_FILES['file']['type'];
 
     if (!is_file($file_name)) {
-        move_uploaded_file($file_tmp, "./" . $dir . $file_name);
-        print('<br><p style="color: green;">Success</p><br>');
-        header('Location: ' . $_SERVER['REQUEST_URI']);
+        if (!($_FILES['file']['name'] === "")) {
+            move_uploaded_file($file_tmp, "./" . $dir . $file_name);
+            header('Location: ' . $_SERVER['REQUEST_URI']);
+        } else {
+            print('<p style="color: red;">ERROR: Please choose file to upload first.</p>');
+        }
     } else {
-        print('<p style="color: red;">' . $file_name . ' file already exist.<br> Please upload file with another name one more time.</p>');
+        print('<p style="color: red;">ERROR: ' . $file_name . ' file already exist.<br> Please upload file with another name one more time.</p>');
     }
 }
 
-if (isset($_POST['download'])) { // still error to download - empty file
-    $file = './' . $_POST['download']; // file path
+/*  DOWNLOAD file  */
+if (isset($_POST['download'])) {
+
+    // still error to download - empty files
+
+    $file = './' . $_GET["path"] . $_POST['download']; // file path
+    print_r($file);
     $fileToDownloadEscaped = str_replace("&nbsp;", " ", htmlentities($file, null, 'utf-8')); // a&nbsp;b.txt --> a b.txt
     ob_clean();
     ob_start();
@@ -77,11 +85,10 @@ if (isset($_POST['download'])) { // still error to download - empty file
         <?php
         /*  LOGIN   */
         if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['password'])) {
-            // if we have POST:
-            if ($_POST['username'] == 'Mindaugas' && $_POST['password'] == '1234') {
+            if ($_POST['username'] == 'Username' && $_POST['password'] == '1234') {
                 $_SESSION['logged_in'] = true;
                 $_SESSION['timeout'] = time();
-                $_SESSION['username'] = 'Mindaugas';
+                $_SESSION['username'] = 'Username';
                 print('<br> Hello ' . $_POST['username'] . '!');
             }
         }
@@ -95,7 +102,7 @@ if (isset($_POST['download'])) { // still error to download - empty file
 
             // back button
             // print('<button class="buttonsOther" type="button" class="button" onclick="history.back();">Back</a></button><br><br>'); // error when come back to first page
-            print('<br><button class="buttonsOther" type="button" class="button"><a href=" ' . $_SERVER['HTTP_REFERER'] . '">Back</a></button><br><br>'); // no error, but bug when you go to the directory of directory and so on
+            print('<button class="buttonsOther" type="button" class="button"><a href=" ' . $_SERVER['HTTP_REFERER'] . '">Back</a></button><br><br>'); // no error, but bug when you go to the directory of directory and so on
 
             // table (files and directories)
             print('<table id="browserTable">
@@ -119,13 +126,13 @@ if (isset($_POST['download'])) { // still error to download - empty file
                         <input class="buttons" type="submit" value="Submit">
                     </form>');
 
-            // LogOut button
+            // Log out button
             echo '<br><button class="buttonsOther" type="button" class="button"><a href="index.php?action=logout">Log Out</button>';
         } else {
             print('<h1>Welcome to SP1 - File Browser</h1>
                     <h2>Log In to start exploring!</h2>
                     <form action="" method="post">
-                        <input class="textInput" type="text" name="username" placeholder="username - Mindaugas" required autofocus></br>
+                        <input class="textInput" type="text" name="username" placeholder="username - Username" required autofocus></br>
                         <input class="textInput" type="password" name="password" placeholder="password - 1234" required><br><br>
                         <button class="buttonsOther" type="submit" name="login">Log In</button>
                     </form>');
