@@ -35,7 +35,7 @@ First PHP sprint tasks - simple file browser in a single file.<br>
 
 ## Permissions
 
-Permited to upload only JPEG, JPG, PNG, TXT and PDF files.
+Permitted to upload only JPEG, JPG, PNG, TXT and PDF files.
 
 ## Authors
 
