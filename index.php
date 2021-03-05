@@ -21,8 +21,8 @@ if (isset($_POST['newDir'])) {
 
 /*  DELETE file  */
 if (isset($_POST['delete'])) {
-    unlink($_GET['path'] . $_POST['delete']);
-    header('Location: ' . $_SERVER['REQUEST_URI']);
+    $deleteFile = $_POST['fileName'];
+    unlink($dir . $deleteFile);
 }
 
 /*  UPLOAD file  */
@@ -50,13 +50,12 @@ if (isset($_POST['download'])) {
 
     // still error to download - empty files
 
-    $file = './' . $_GET["path"] . $_POST['download']; // file path
-    print_r($file);
+    $file = './' . $_GET["path"] . $_POST['download']; // file path ??????????????? 
     $fileToDownloadEscaped = str_replace("&nbsp;", " ", htmlentities($file, null, 'utf-8')); // a&nbsp;b.txt --> a b.txt
     ob_clean();
     ob_start();
     header('Content-Description: File Transfer');
-    header('Content-Type: application/pdf');
+    header('Content-Type: application/pdf'); //????????????
     header('Content-Disposition: attachment; filename=' . basename($fileToDownloadEscaped));
     header('Content-Transfer-Encoding: binary');
     header('Expires: 0');
@@ -98,11 +97,11 @@ if (isset($_POST['download'])) {
 
             // start position:  ./ + 'path' 
             $dir = './' . $_GET['path'];
+
             print('<h2>Directory contents: ' . $_SERVER['REQUEST_URI'] . '</h2>');
 
             // back button
-            // print('<button class="buttonsOther" type="button" class="button" onclick="history.back();">Back</a></button><br><br>'); // error when come back to first page
-            print('<button class="buttonsOther" type="button" class="button"><a href=" ' . $_SERVER['HTTP_REFERER'] . '">Back</a></button><br><br>'); // no error, but bug when you go to the directory of directory and so on
+            print('<button class="buttonsOther" type="button" class="button"><a href=" ' . $_SERVER['HTTP_REFERER'] . '">Back</a></button><br><br>');
 
             // table (files and directories)
             print('<table id="browserTable">
@@ -152,7 +151,8 @@ if (isset($_POST['download'])) {
                                 <td>' . $d . '</td>
                                 <td>
                                     <form class="actions" action="" method="POST">
-                                        <button class="deleteButton" type="submit" name="delete" value="' . $$d . '">Delete</button>
+                                         <input type="hidden" name="fileName" value="' . $d . '">
+                                        <button class="deleteButton" type="submit" name="delete" value="' . $$d . '" >Delete</button>
                                         <button class="buttons" type="submit" name="download" value="' . $$d . '">Download</button>
                                     </form>                                 
                                 </td>
@@ -175,7 +175,6 @@ if (isset($_POST['download'])) {
                 }
             }
         }
-
         ?>
     </div>
 </body>
