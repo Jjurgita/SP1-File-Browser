@@ -66,8 +66,7 @@ if (isset($_POST['download'])) {
     ob_clean();
     ob_start();
     header('Content-Description: File Transfer');
-    header('Content-Type: application/pdf'); //????????????
-    // header('Content-Type:' . mime_content_type($fileToDownloadEscaped));
+    header('Content-Type: application/pdf');
     header('Content-Disposition: attachment; filename=' . basename($fileToDownloadEscaped));
     header('Content-Transfer-Encoding: binary');
     header('Expires: 0');
@@ -80,7 +79,6 @@ if (isset($_POST['download'])) {
 }
 ?>
 
-<!-- <!DOCTYPE html> -->
 <html lang="en">
 
 <head>
@@ -139,7 +137,7 @@ if (isset($_POST['download'])) {
 
             // Log out button
             echo '<br><button class="buttonsOther" type="button" class="button"><a href="index.php?action=logout">Log Out</button>';
-        } else {
+        } else { // before user logged in print Log In form
             print('<h1>Welcome to SP1 - File Browser</h1>
                     <h2>Log In to start exploring!</h2>
                     <form action="" method="post">
