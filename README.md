@@ -33,6 +33,10 @@ First PHP sprint tasks - simple file browser in a single file.<br>
 <li> Delete, Upload and Download files</li>
 </ul>
 
+## Permissions
+
+Permited to upload only JPEG, JPG, PNG, TXT and PDF files.
+
 ## Authors
 
 [Jurgita](https://github.com/Jjurgita)
