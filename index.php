@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
 /*  LOGOUT   */
 session_start();
@@ -21,41 +22,52 @@ if (isset($_POST['newDir'])) {
 
 /*  DELETE file  */
 if (isset($_POST['delete'])) {
-    $deleteFile = $_POST['fileName'];
+    $deleteFile = $_GET['path'] . $_POST['fileName'];
     unlink($dir . $deleteFile);
 }
 
 /*  UPLOAD file  */
 if (isset($_FILES['file'])) {
+
     $file_name = $_FILES['file']['name'];
     $file_size = $_FILES['file']['size'];
     $file_tmp = $_FILES['file']['tmp_name'];
-    $file_error = $_FILES['file']['error'];
     $file_type = $_FILES['file']['type'];
 
-    if (!is_file($file_name)) {
-        if (!($_FILES['file']['name'] === "")) {
-            move_uploaded_file($file_tmp, "./" . $dir . $file_name);
-            header('Location: ' . $_SERVER['REQUEST_URI']);
+    // files extension - only permit jpegs, jpgs, pngs, txt and pdfs
+    $file_ext = strtolower(end(explode('.', $_FILES['file']['name'])));
+    $extensions = array("jpeg", "jpg", "png", "txt", "pdf");
+
+    if (!($file_name === "")) {
+        if (!(is_file($file_name))) {
+            if (!(in_array($file_ext, $extensions) === false)) {
+                if ($file_size < 3000000) {
+                    move_uploaded_file($file_tmp, "./" . $_GET['path'] . $file_name);
+                    header('Location: ' . $_SERVER['REQUEST_URI']);
+                } else {
+                    print('<p style="color: red;">ERROR: ' . $file_name . ' file is too big. Max 3MB.</p>');
+                }
+            } else {
+                print('<p style="color: red;">ERROR: This file extension not allowed.<br>Please choose a JPEG, JPG, PNG, TXT or PDF file.</p>');
+            }
         } else {
-            print('<p style="color: red;">ERROR: Please choose file to upload first.</p>');
+            print('<p style="color: red;">ERROR: ' . $file_name . ' file already exist.<br>Please upload file with another name one more time.</p>');
         }
     } else {
-        print('<p style="color: red;">ERROR: ' . $file_name . ' file already exist.<br> Please upload file with another name one more time.</p>');
+        print('<p style="color: red;">ERROR: Please choose file to upload first.</p>');
     }
 }
 
 /*  DOWNLOAD file  */
 if (isset($_POST['download'])) {
 
-    // still error to download - empty files
-
-    $file = './' . $_GET["path"] . $_POST['download']; // file path ??????????????? 
+    $file = './' . $_GET["path"] . $_POST['fileName']; // file path
     $fileToDownloadEscaped = str_replace("&nbsp;", " ", htmlentities($file, null, 'utf-8')); // a&nbsp;b.txt --> a b.txt
     ob_clean();
     ob_start();
     header('Content-Description: File Transfer');
     header('Content-Type: application/pdf'); //????????????
+    // header('Content-Type:' . mime_content_type($fileToDownloadEscaped));
     header('Content-Disposition: attachment; filename=' . basename($fileToDownloadEscaped));
     header('Content-Transfer-Encoding: binary');
     header('Expires: 0');
@@ -68,7 +80,7 @@ if (isset($_POST['download'])) {
 }
 ?>
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html> -->
 <html lang="en">
 
 <head>
@@ -144,21 +156,21 @@ if (isset($_POST['download'])) {
             $currentDir = array_diff(scandir($dir), array('.', '..'));
 
             foreach ($currentDir as $d) { //go through current directory content
-                if (is_file($dir . '/' . $d)) {
+                if (is_file($dir . $d)) {
                     // check if file is in our directory; if yes, print file path
                     print('<tr>
                                 <td>File</td>
                                 <td>' . $d . '</td>
                                 <td>
                                     <form class="actions" action="" method="POST">
-                                         <input type="hidden" name="fileName" value="' . $d . '">
+                                        <input type="hidden" name="fileName" value="' . $d . '">
                                         <button class="deleteButton" type="submit" name="delete" value="' . $$d . '" >Delete</button>
                                         <button class="buttons" type="submit" name="download" value="' . $$d . '">Download</button>
                                     </form>                                 
                                 </td>
                             </tr>');
                 }
-                if (is_dir($dir . '/' . $d)) {
+                if (is_dir($dir . $d)) {
                     if (!isset($_GET['path'])) { // if there's no 'path', add 'path'
                         print('<tr>
                                     <td>Directory</td>
