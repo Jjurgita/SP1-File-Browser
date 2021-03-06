@@ -125,8 +125,8 @@ if (isset($_POST['download'])) {
 
             // upload file
             print('<br><form action="" method="POST" enctype="multipart/form-data">
-                        <input type="file" name="file"/><br>
-                        <input type="submit" name="upload" value="Upload file"/>
+                        <input class="buttons" type="file" name="file"/><br>
+                        <input class="buttons upload" type="submit" name="upload" value="Upload file"/>
                     </form>');
 
             // new directory
