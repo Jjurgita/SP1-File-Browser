@@ -28,7 +28,6 @@ if (isset($_POST['delete'])) {
 
 /*  UPLOAD file  */
 if (isset($_FILES['file'])) {
-
     $file_name = $_FILES['file']['name'];
     $file_size = $_FILES['file']['size'];
     $file_tmp = $_FILES['file']['tmp_name'];
@@ -60,7 +59,6 @@ if (isset($_FILES['file'])) {
 
 /*  DOWNLOAD file  */
 if (isset($_POST['download'])) {
-
     $file = './' . $_GET["path"] . $_POST['fileName']; // file path
     $fileToDownloadEscaped = str_replace("&nbsp;", " ", htmlentities($file, null, 'utf-8')); // a&nbsp;b.txt --> a b.txt
     ob_clean();
@@ -150,12 +148,12 @@ if (isset($_POST['download'])) {
         /*  TABLE PRINT FUNCTION  */
         function printFilesAndDirectories($dir)
         {
-            // Current directory CONTENT (files and other directories). Note: array_diff() function deletes '.' and '..' from an array 
+            // Current directory CONTENT (files and other directories)
             $currentDir = array_diff(scandir($dir), array('.', '..'));
 
             foreach ($currentDir as $d) { //go through current directory content
                 if (is_file($dir . $d)) {
-                    // check if file is in our directory; if yes, print file path
+                    // check if file is in our directory
                     print('<tr>
                                 <td>File</td>
                                 <td>' . $d . '</td>
