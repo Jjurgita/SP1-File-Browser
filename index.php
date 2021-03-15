@@ -109,7 +109,8 @@ if (isset($_POST['download'])) {
             print('<h2>Directory contents: ' . $_SERVER['REQUEST_URI'] . '</h2>');
 
             // back button
-            print('<button class="buttonsOther" type="button" class="button"><a href=" ' . $_SERVER['HTTP_REFERER'] . '">Back</a></button><br><br>');
+            // print('<button class="buttonsOther" type="button" class="button"><a href=" ' . $_SERVER['HTTP_REFERER'] . '">Back</a></button><br><br>');
+            print('<button class="buttonsOther" type="button" onclick="back()">Back</button><br><br>');
 
             // table (files and directories)
             print('<table id="browserTable">
@@ -184,6 +185,18 @@ if (isset($_POST['download'])) {
             }
         }
         ?>
+        <script>
+            function back() {
+                let url = window.location.href.split("/");
+                if (url[url.length - 1] === "") {
+                    url.splice(url.length - 2, 1);
+                } else {
+                    url.splice(url.length - 1);
+                }
+                window.location.href = url.join("/");
+                return window.location.href;
+            }
+        </script>
     </div>
 </body>
 
